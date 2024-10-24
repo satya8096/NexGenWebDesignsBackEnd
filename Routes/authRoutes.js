@@ -10,6 +10,6 @@ const router = express.Router();
 
 router.post("/forgot-password", forgotPassword);
 router.post("/reset/:token", resetPassword);
-router.get("/verify-token",protect, VerifyToken);
+router.get("/verify-token", protect, VerifyToken);
 
 module.exports = router;

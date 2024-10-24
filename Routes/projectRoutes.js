@@ -4,7 +4,7 @@ const {
   createProject,
   updateProject,
   deleteProject,
-} = require("../controllers/projectController");
+} = require("../Controllers/projectController");
 const router = express.Router();
 
 router.route("/").get(getAllProjects).post(createProject);
