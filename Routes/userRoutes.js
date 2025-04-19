@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.get("/", getUsers); // Admin access only
+router.get("/", getUsers); 
 
 module.exports = router;

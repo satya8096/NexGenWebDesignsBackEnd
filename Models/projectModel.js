@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
-
-const projectSchema = mongoose.Schema(
+const mongoose = require("mongoose")
+const projectSchema = new mongoose.Schema(
   {
     clientName: {
       type: String,
@@ -10,50 +9,49 @@ const projectSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    projectType: {
-      type: String,
-      enum: ["Basic", "Standard", "Premium"],
-      default: "Basic",
-    },
-    amountPaid: {
-      type: Number,
-      required: true,
-    },
     projectCost: {
       type: Number,
       required: true,
     },
+    amountPaid: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     dueAmount: {
       type: Number,
       required: true,
+      default: 0,
+    },
+    invoices: [
+      {
+        type: String,
+      },
+    ],
+    agreements: [
+      {
+        type: String,
+      },
+    ],
+    status: {
+      type: String,
+      enum: ["Pending", "In Progress", "Completed", "Cancelled"],
+      default: "Pending",
     },
     deadline: {
       type: Date,
       required: true,
     },
-    invoiceUrl: {
-      type: Array,
-      default: [],
-    },
-    agreementUrl: {
-      type: String,
-      required: true,
-    },
     deliveryDate: {
-      type: String,
-      default: "",
+      type: Date,
     },
-    projectUrl: {
+    projectURL: {
       type: String,
-      default: "",
-    },
-    status: {
-      type: String,
-      enum: ["Pending", "Completed", "In Progress", "Cancelled"],
-      default: "Pending",
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 module.exports = mongoose.model("Project", projectSchema);

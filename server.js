@@ -7,6 +7,8 @@ const errorHandler = require("./Utils/errorHandler");
 const userRoutes = require("./Routes/userRoutes");
 const projectRoutes = require("./Routes/projectRoutes");
 const authRoutes = require("./Routes/authRoutes");
+const paymentRoutes = require("./Routes/paymentsRoutes");
+const paymentSpendRoutes = require("./Routes/paymentSpendRoutes");
 const protect = require("./Middlewares/authMiddleware");
 const app = express();
 app.use(express.json());
@@ -18,6 +20,8 @@ connectDB();
 app.use("/api/admins", userRoutes);
 app.use("/api/projects", protect, projectRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/payments", protect, paymentRoutes);
+app.use("/api/paymentspends", protect, paymentSpendRoutes);
 
 // Error handler middleware
 app.use(errorHandler);
