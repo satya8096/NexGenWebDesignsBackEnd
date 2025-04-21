@@ -21,16 +21,15 @@ const paymentSchema = new mongoose.Schema({
   paymentMode: {
     type: String,
     required: true,
-    enum: ["Cash", "Card", "UPI", "Bank Transfer", "Other"], // optional enum for validation
+    enum: ["Cash", "Card", "UPI", "Bank Transfer", "Other", "Phonepay", "Gpay"],
   },
   dueAmount: {
     type: Number,
-    required: true,
   },
   status: {
     type: String,
     required: true,
-    enum: ["In Progress", "Completed", "Pending", "Cancelled"], // optional status types
+    enum: ["Received", "Pending", "Cancelled"],
   },
   createdAt: {
     type: Date,

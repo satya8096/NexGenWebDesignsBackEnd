@@ -6,36 +6,42 @@ const jwt = require("jsonwebtoken");
 
 // Send password reset email
 exports.forgotPassword = async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
-  if (!user)
-    return res.status(404).json({ status: "Fail", message: "User not found" });
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user)
+      return res
+        .status(404)
+        .json({ status: "Fail", message: "User not found" });
 
-  const resetToken = crypto.randomBytes(32).toString("hex");
-  user.resetToken = resetToken;
-  user.resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    user.resetToken = resetToken;
+    user.resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
 
-  await user.save();
+    await user.save();
 
-  // Send email
-  const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-  });
+    // Send email
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+    });
 
-  const mailOptions = {
-    to: user.email,
-    from: "no-reply@nexgenwebdesigns.com",
-    subject: "Password Reset",
-    text: `Click the following link to reset your password: https://nexgenwebdesigns-dashboard.netlify.app/reset/${resetToken}`,
-  };
+    const mailOptions = {
+      to: user.email,
+      from: "no-reply@nexgenwebdesigns.com",
+      subject: "Password Reset",
+      text: `Click the following link to reset your password: ${process.env.FRONT_END_URL}reset-password/${resetToken}`,
+    };
 
-  transporter.sendMail(mailOptions);
+    transporter.sendMail(mailOptions);
 
-  res.json({
-    status: "Success",
-    message: "Password reset link sent to your email",
-  });
+    res.json({
+      status: "Success",
+      message: "Password reset link sent to your email",
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 // Reset password after verifying the token

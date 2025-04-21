@@ -8,6 +8,6 @@ const {
 const router = express.Router();
 
 router.route("/").get(getAllProjects).post(createProject);
-router.route("/:id").patch(updateProject).delete(deleteProject);
+router.route("/:id").put(updateProject).delete(deleteProject);
 
 module.exports = router;

@@ -10,6 +10,7 @@ const authRoutes = require("./Routes/authRoutes");
 const paymentRoutes = require("./Routes/paymentsRoutes");
 const paymentSpendRoutes = require("./Routes/paymentSpendRoutes");
 const protect = require("./Middlewares/authMiddleware");
+const adminRoutes = require("./Routes/AdminCounters");
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -22,6 +23,7 @@ app.use("/api/projects", protect, projectRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/payments", protect, paymentRoutes);
 app.use("/api/paymentspends", protect, paymentSpendRoutes);
+app.use("/api/admin/counters", protect,adminRoutes);
 
 // Error handler middleware
 app.use(errorHandler);

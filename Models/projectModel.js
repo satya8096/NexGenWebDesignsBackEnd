@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const projectSchema = new mongoose.Schema(
   {
     clientName: {
@@ -20,8 +20,6 @@ const projectSchema = new mongoose.Schema(
     },
     dueAmount: {
       type: Number,
-      required: true,
-      default: 0,
     },
     invoices: [
       {
@@ -53,5 +51,10 @@ const projectSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+projectSchema.pre("save", function (next) {
+  this.dueAmount = this.projectCost - this.amountPaid;
+  next();
+});
 
 module.exports = mongoose.model("Project", projectSchema);

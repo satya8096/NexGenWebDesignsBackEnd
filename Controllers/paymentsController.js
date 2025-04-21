@@ -1,23 +1,29 @@
-const paymenstModel = require("./../Models/paymentsModel");
+const paymentsModel = require("./../Models/paymentsModel");
 
-// Create a new payment
+// ✅ Create a new payment
 exports.createPayment = async (req, res) => {
-  console.log(req.body);
-
   try {
-    const { purpose, amount, spendDate, mode, remarks } = req.body;
+    const {
+      clientName,
+      projectName,
+      paymentAmount,
+      paymentDate,
+      paymentMode,
+      status,
+    } = req.body;
 
-    const newPayment = new paymenstModel({
-      purpose,
-      amount,
-      spendDate,
-      mode,
-      remarks,
+    const newPayment = new paymentsModel({
+      clientName,
+      projectName,
+      paymentAmount,
+      paymentDate,
+      paymentMode,
+      status,
     });
 
     const savedPayment = await newPayment.save();
     res.status(201).json({
-      message: "Success",
+      message: "Payment created successfully",
       data: savedPayment,
     });
   } catch (error) {
@@ -25,28 +31,28 @@ exports.createPayment = async (req, res) => {
   }
 };
 
-// Get all payments
+// ✅ Get all payments
 exports.getAllPayments = async (req, res) => {
   try {
-    const payments = await paymenstModel.find().sort({ spendDate: -1 });
+    const payments = await paymentsModel.find().sort({ paymentDate: -1 });
     res.status(200).json({
       message: "Success",
-      data: payments,
+      data: payments.reverse(),
     });
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch payments", error });
   }
 };
 
-// Get a single payment by ID
+// ✅ Get a single payment by ID
 exports.getPaymentById = async (req, res) => {
   try {
-    const payment = await paymenstModel.findById(req.params.id);
+    const payment = await paymentsModel.findById(req.params.id);
     if (!payment) {
       return res.status(404).json({ message: "Payment not found" });
     }
     res.status(200).json({
-      message: "Success",
+      message: "Payment fetched successfully",
       data: payment,
     });
   } catch (error) {
@@ -54,14 +60,28 @@ exports.getPaymentById = async (req, res) => {
   }
 };
 
-// Update a payment by ID
+// ✅ Update a payment by ID
 exports.updatePayment = async (req, res) => {
   try {
-    const { purpose, amount, spendDate, mode, remarks } = req.body;
+    const {
+      clientName,
+      projectName,
+      paymentAmount,
+      paymentDate,
+      paymentMode,
+      status,
+    } = req.body;
 
-    const updatedPayment = await paymenstModel.findByIdAndUpdate(
+    const updatedPayment = await paymentsModel.findByIdAndUpdate(
       req.params.id,
-      { purpose, amount, spendDate, mode, remarks },
+      {
+        clientName,
+        projectName,
+        paymentAmount,
+        paymentDate,
+        paymentMode,
+        status,
+      },
       { new: true, runValidators: true }
     );
 
@@ -70,7 +90,7 @@ exports.updatePayment = async (req, res) => {
     }
 
     res.status(200).json({
-      message: "Success",
+      message: "Payment updated successfully",
       data: updatedPayment,
     });
   } catch (error) {
@@ -78,10 +98,10 @@ exports.updatePayment = async (req, res) => {
   }
 };
 
-// Delete a payment by ID
+// ✅ Delete a payment by ID
 exports.deletePayment = async (req, res) => {
   try {
-    const deletedPayment = await Payment.findByIdAndDelete(req.params.id);
+    const deletedPayment = await paymentsModel.findByIdAndDelete(req.params.id);
     if (!deletedPayment) {
       return res.status(404).json({ message: "Payment not found" });
     }
