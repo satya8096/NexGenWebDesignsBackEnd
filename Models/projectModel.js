@@ -43,6 +43,9 @@ const projectSchema = new mongoose.Schema(
     deliveryDate: {
       type: Date,
     },
+    renewalDate: {
+      type: Date,
+    },
     projectURL: {
       type: String,
     },
