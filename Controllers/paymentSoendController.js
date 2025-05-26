@@ -6,7 +6,7 @@ exports.getAllPayments = async (req, res) => {
     const payments = await paymentSpend.find().sort({ spendDate: -1 });
     res.status(200).json({
       message: "Success",
-      data: payments.reverse(),
+      data: payments,
     });
   } catch (error) {
     res.status(500).json({ message: "Error fetching payments", error });

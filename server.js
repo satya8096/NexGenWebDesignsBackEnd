@@ -23,7 +23,7 @@ app.use("/api/projects", protect, projectRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/payments", protect, paymentRoutes);
 app.use("/api/paymentspends", protect, paymentSpendRoutes);
-app.use("/api/admin/counters", protect,adminRoutes);
+app.use("/api/admin/counters", protect, adminRoutes);
 
 // Error handler middleware
 app.use(errorHandler);

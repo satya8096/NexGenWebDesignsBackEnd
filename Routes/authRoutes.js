@@ -1,15 +1,8 @@
 const express = require("express");
-const {
-  forgotPassword,
-  resetPassword,
-  VerifyToken,
-} = require("../Controllers/authController");
-const protect = require("../Middlewares/authMiddleware");
+const { VerifyToken } = require("../Controllers/authController");
 
 const router = express.Router();
 
-router.post("/forgot-password", forgotPassword);
-router.post("/reset/:token", resetPassword);
-router.get("/verify-token", protect, VerifyToken);
+router.get("/verify-token", VerifyToken);
 
 module.exports = router;

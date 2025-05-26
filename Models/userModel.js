@@ -12,8 +12,17 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
     },
-    resetToken: String,
-    resetTokenExpiry: Date,
+    phoneNumber: {
+      type: String,
+    },
+    empId: {
+      type: String,
+    },
+    role: {
+      type: String,
+    },
+    otp: String,
+    otpExpiresAt: Date,
   },
   { timestamps: true }
 );
